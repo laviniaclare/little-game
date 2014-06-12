@@ -151,16 +151,16 @@ class MC_Girl(GameElement):
     def interact(self, player):
         GAME_BOARD.draw_msg("Whoa! What are all of those weird colors on your clothes? I've never seen such vibrant colors before! Are you....from someplace else?")
 
-class MC_Boy(GameElement):
-    IMAGE="MCBoy"
+class MC_Boy2(GameElement):
+    IMAGE="MCBoy2"
     SOLID=True
     def interact(self, player):
         GAME_BOARD.draw_msg("Wow! That rock you've got---it has more colors than I could ever imagine! Can I have it?")
-
+        GAME_BOARD.check_status("Waiting...")
 #Interactive text here. 
 
-class MC_Boy2(GameElement):
-    IMAGE="MCBoy2"
+class MC_Boy(GameElement):
+    IMAGE="MCBoy"
     SOLID=True
     def interact(self, player):
         GAME_BOARD.draw_msg("I never have to worry about getting dressed for special occasions! This is the same outfit I wore to Bob's wedding! My aunt's funeral! My own bar mitzvah!")
@@ -271,9 +271,16 @@ def initialize():
         GAME_BOARD.register(sad_child)
         GAME_BOARD.set_el(4, 7, sad_child)
 
-        portal = Portal()
-        GAME_BOARD.register(portal)
-        GAME_BOARD.set_el(7, 7, portal)
+        # if not :
+        #     portal = Portal()
+        #     GAME_BOARD.register(portal)
+        #     GAME_BOARD.set_el(7, 7, portal)
+        # else:
+        #     GAME_BOARD.draw_msg("Press Enter to travel in spaaaaaaaaaaaaaceeeee. (Make sure to talk to everyone and check out the scenery first. Stop and smell the...lava rocks.)")
+        #     if KEYBOARD[key.ENTER]:
+        #         on_draw()
+        #         level2()
+        #         #refresh screen somehow. ondraw? 
 
         GAME_BOARD.draw_msg("This game, it is the saddest. :( :( :*( ")
 
@@ -401,7 +408,7 @@ def initialize():
 
 
         GAME_BOARD.draw_msg("Wow, it's like and old movie.")
-    level2()
+    level3()
 
 
     global PLAYER
@@ -424,7 +431,7 @@ def keyboard_handler():
     if KEYBOARD[key.RIGHT]:
         direction = "right"
     if KEYBOARD[key.ENTER]:
-        print "enter key"
+        GAME_BOARD.check_status()
 
     if direction:
         next_location = PLAYER.next_pos(direction)

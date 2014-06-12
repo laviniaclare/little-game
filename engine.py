@@ -112,6 +112,8 @@ class Board(object):
         #     else:
         #         row = ["Water"] + (["RainbowBlock"] * inner_width) + ["Water"]
         #         game_map.append(row)
+        self.status = "Playing"
+
         def level1_map():
             for i in range(height):
 
@@ -131,7 +133,7 @@ class Board(object):
             for i in range(height):
                 for j in range(width):
                     game_map.append(["Block"]* width)   
-        level2_map()
+        level3_map()
 
         self.base_board = game_map
         self.content_layer = []
@@ -179,10 +181,13 @@ class Board(object):
         sprite.draw()
 
     def check_bounds(self, x, y):
-        if not (0 <= x < self.width):
-            raise IndexError("%r is out of bounds of the board width: %d"%(x, self.width))
-        if not (0 <= y < self.height):
-            raise IndexError("%r is out of bounds of the board height: %d"%(y, self.width))
+        if x == 0:
+
+
+        # if not (0 <= x < self.width):
+        #     raise IndexError("%r is out of bounds of the board width: %d"%(x, self.width))
+        # if not (0 <= y < self.height):
+        #     raise IndexError("%r is out of bounds of the board height: %d"%(y, self.width))
 
     def get_el(self, x, y):
         self.check_bounds(x, y)
@@ -220,6 +225,14 @@ class Board(object):
                 el = self.content_layer[y][x]
                 if el:
                     self.draw_active(el.sprite, x, y)
+
+
+    def check_status(self, status):
+        self.status = status
+        return status
+
+
+
 
 
 class Obstacle(GameElement):
