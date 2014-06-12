@@ -32,6 +32,8 @@ def setup_images():
             "TallTree": "Tree Tall.png",
             "BestTree": "Tree Cute.png",
             "DeadShrub": "Dead_Shrub.png",
+            "RainbowTree": "RainbowTree.png",
+            "MCTree": "Monochrome_Tree.png",
             "Lava": "Lava_block.png",
             "Water": "Water Block.png",
             "Rock": "Rock.png",
@@ -39,6 +41,7 @@ def setup_images():
             "BlackRock": "Black_rock.png",
             "LavaRock": "Lava_Rock.png",
             "RainbowRock": "RainbowRock.png",
+            "MCRock": "Monochrome_Rock.png",
             "Chest": "Chest Closed.png",
             "DoorClosed": "Door Tall Closed.png",
             "DoorOpen": "Door Tall Open.png",
@@ -47,16 +50,22 @@ def setup_images():
             "OrangeGem": "Gem Orange.png",
             "Star": "Star.png",
             "RainbowStar": "RainbowStar.png",
-            "RainbowStarGif": "RainbowStarGif.gif",
             "Selector": "Selector.png",
             "Heart": "Heart.png",
             "Key": "Key.png",
             "Boy": "Character Boy.png",
             "Boy2": "boy2.png",
-            "Cat": "Character Cat Girl.png",
+            "RainbowBoy2": "RainbowBoy2.png",
+            "MCBoy": "Monochrome Boy.png",
+            "MCBoy2": "Monochrome_Boy.png",
+            "Cat" : "Character Cat Girl.png",
+            "RainbowCat": "RainbowCatGirl.png",
             "Horns": "Character Horn Girl.png",
             "Girl": "Character Pink Girl.png",
+            "RainbowGirl1": "RainbowGirl1.png",
             "Girl2": "Character Purple Girl.png",
+            "RainbowGirl2": "RainbowGirl2.png",
+            "MCGirl": "Monochrome Girl.png",
             "Princess": "Character Princess Girl.png",
             "SadBoy": "SadChild.png",
             "SouthRamp": "Ramp South.png",
@@ -103,16 +112,27 @@ class Board(object):
         #     else:
         #         row = ["Water"] + (["RainbowBlock"] * inner_width) + ["Water"]
         #         game_map.append(row)
+        def level1_map():
+            for i in range(height):
 
-        for i in range(height):
+                if i == 0 or i == height-1:
+                    # On the boundaries
+                    game_map.append(["Lava"] * width)
+                else:
+                    row = ["Lava"] + (["DarkDirt"] * inner_width) + ["Lava"]
+                    game_map.append(row)
+      
+        def level2_map():
+            for i in range(height):
+                for j in range(width):
+                    game_map.append(["RainbowBlock"]* width)
 
-            if i == 0 or i == height-1:
-                # On the boundaries
-                game_map.append(["Lava"] * width)
-            else:
-                row = ["Lava"] + (["DarkDirt"] * inner_width) + ["Lava"]
-                game_map.append(row)
-        
+        def level3_map():
+            for i in range(height):
+                for j in range(width):
+                    game_map.append(["Block"]* width)   
+        level2_map()
+
         self.base_board = game_map
         self.content_layer = []
         row = [ None ] * width
