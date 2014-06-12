@@ -11,10 +11,21 @@ KEYBOARD = None
 PLAYER = None
 ######################
 
-GAME_WIDTH = 5
-GAME_HEIGHT = 5
+GAME_WIDTH = 9
+GAME_HEIGHT = 9
 
 #### Put class definitions here ####
+class Yellow_Star(GameElement):
+    IMAGE="Star"
+    def interact(self, player):
+        player.inventory.append(self)
+        GAME_BOARD.draw_msg("You just acquired a yellow star! You have %d items!" %(len(player.inventory)))
+
+
+class Best_Tree(GameElement):
+    IMAGE="BestTree"
+    SOLID=True
+
 class Rock(GameElement):
     IMAGE="Rock"
     SOLID = True
@@ -31,6 +42,59 @@ class Heart(GameElement):
     def interact(self, player):
         player.inventory.append(self)
         GAME_BOARD.draw_msg("You just acquired a heart! You have %d items!" %(len(player.inventory)))
+
+class Rainbow_Rock(GameElement):
+    IMAGE = "RainbowRock"
+    def interact(self, player):
+        player.inventory.append(self)
+        GAME_BOARD.draw_msg("You just acquired a Rainbow Rock! Weird.  Do those even exists? You have %d items!" %(len(player.inventory)))
+
+
+
+class Rainbow_Star(GameElement):
+    IMAGE="RainbowStar"
+    def interact(self, player):
+        player.inventory.append(self)
+        GAME_BOARD.draw_msg("You just acquired a RAINBOW STAR! You have %d items!" %(len(player.inventory)))
+
+class Rainbow_Star2(GameElement):
+    IMAGE="RainbowStarGif"
+    def interact(self, player):
+        player.inventory.append(self)
+        GAME_BOARD.draw_msg("This is another Rainbow Star--it may be inferior...I'm not sure. You have %d items!" %(len(player.inventory)))
+
+
+class Rainbok_Block(GameElement):
+    IMAGE="RainbowBlock"
+    SOLID=True
+
+class West_Ramp(GameElement):
+    IMAGE="WestRamp"
+    SOLID=True
+
+class North_Ramp(GameElement):
+    IMAGE="NorthRamp"
+    SOLID=True
+
+class East_Ramp(GameElement):
+    IMAGE="EastRamp"
+    SOLID=True
+
+class South_Ramp(GameElement):
+    IMAGE="SouthRamp"
+    SOLID=True
+
+class Grass_Block(GameElement):
+    IMAGE="GrassBlock"
+    SOLID=True
+
+
+class ClassName(object):
+    """docstring for ClassName"""
+    def __init__(self, arg):
+        super(ClassName, self).__init__()
+        self.arg = arg
+        
 
 
 class Character(GameElement):
@@ -50,6 +114,10 @@ class Character(GameElement):
         elif direction == "right":
             return (self.x+1, self.y)
         return None
+
+    def health(self):
+        health = 50
+
 ####   End class definitions    ####
 
 def initialize():
@@ -60,39 +128,69 @@ def initialize():
     # GAME_BOARD.set_el(2, 1, rock1)
 
     #Initialize and register rock 2
+    Star=Yellow_Star()
+    GAME_BOARD.register(Star)
+    GAME_BOARD.set_el(5,4, Star)
+
     rock2 = Blue_Rock()
     GAME_BOARD.register(rock2)
     GAME_BOARD.set_el(2, 2, rock2)
-   
 
-    #iNITALIZE moar rocks
-    rock_positions=[
-        (2,1),
-        (1,2),
-        (3,2),
-        (2,3)
-        ]
-    rocks = []
+    best_tree_positions=[
+            (0,0),
+            (0,8),
+            (8,0),
+            (8,8)
+            ]
+    best_trees=[]
+    
+    for pos in best_tree_positions:
+        tree=Best_Tree()
+        GAME_BOARD.register(tree)
+        GAME_BOARD.set_el(pos[0], pos[1], tree)
+        best_trees.append(tree)
 
-    for pos in rock_positions:
-        rock=Rock()
-        GAME_BOARD.register(rock)
-        GAME_BOARD.set_el(pos[0], pos[1], rock)
-        rocks.append(rock)
-    rocks[-1].SOLID = False
 
-    for rock in rocks:
-        print rock
+
+    # rock_positions=[
+    #     (2,1),
+    #     (1,2),
+    #     (3,2),
+    #     (2,3)
+    #     ]
+    # rocks = []
+
+    # for pos in rock_positions:
+    #     rock=Rock()
+    #     GAME_BOARD.register(rock)
+    #     GAME_BOARD.set_el(pos[0], pos[1], rock)
+    #     rocks.append(rock)
+    # rocks[-1].SOLID = False
+
+    # for rock in rocks:
+    #     print rock
 
     heart = Heart()
     GAME_BOARD.register(heart)
-    GAME_BOARD.set_el(0, 0, heart)
+    GAME_BOARD.set_el(6, 2, heart)
+
+    # rainbow_star2=Rainbow_Star2()
+    # GAME_BOARD.register(rainbow_star2)
+    # GAME_BOARD.set_el(8,6,rainbow_star2)
+    
+    # rainbow_star=Rainbow_Star()
+    # GAME_BOARD.register(rainbow_star)
+    # GAME_BOARD.set_el(7,6,rainbow_star)
+
+    # rainbow_rock=Rainbow_Rock()
+    # GAME_BOARD.register(rainbow_rock)
+    # GAME_BOARD.set_el(0,4, rainbow_rock)
 
 
     global PLAYER
     PLAYER = Character()
     GAME_BOARD.register(PLAYER)
-    GAME_BOARD.set_el(4, 4, PLAYER)
+    GAME_BOARD.set_el(2, 2, PLAYER)
 
     print PLAYER
 
