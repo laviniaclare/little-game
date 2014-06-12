@@ -26,6 +26,10 @@ class Best_Tree(GameElement):
     IMAGE="BestTree"
     SOLID=True
 
+class Dead_Shrub(GameElement):
+    IMAGE="DeadShrub"
+    SOLID=True
+
 class Rock(GameElement):
     IMAGE="Rock"
     SOLID = True
@@ -68,25 +72,44 @@ class Rainbok_Block(GameElement):
     IMAGE="RainbowBlock"
     SOLID=True
 
-class West_Ramp(GameElement):
-    IMAGE="WestRamp"
-    SOLID=True
-
-class North_Ramp(GameElement):
-    IMAGE="NorthRamp"
-    SOLID=True
-
-class East_Ramp(GameElement):
-    IMAGE="EastRamp"
-    SOLID=True
-
-class South_Ramp(GameElement):
-    IMAGE="SouthRamp"
-    SOLID=True
 
 class Grass_Block(GameElement):
     IMAGE="GrassBlock"
     SOLID=True
+
+class Lava_Rock(GameElement):
+    IMAGE="LavaRock"
+    SOLID=True
+
+class Black_Rock(GameElement):
+    IMAGE="BlackRock"
+    def interact(self, player):
+        player.inventory.append(self)
+        GAME_BOARD.draw_msg("You just acquired a BLACK ROCK! Maybe this will be useful later. You have %d items!" %(len(player.inventory)))
+
+class SadChild(GameElement):
+    IMAGE="SadBoy"
+    SOLID=True
+    def interact(self, player):
+        GAME_BOARD.draw_msg("Hello Traveler. If you were planning on having a nice time here, you came at the wrong time. *sniffle* \\ All of our plants are dead.  We have no food. Soon we will all be dead, too. \\*tear runs down cheek*If only someone would bring us Best Tree seeds we could plant them in the lava to turn it to water and revive our crops.\\ Alas! No one here has the strength to go. *can no longer control his desperate sobbing*\\ If you got some for us, we would be so happy.  We might even have a happy party, for once.\\ My parents died at the last party. It was not happy.")
+
+class Boy2(GameElement):
+    IMAGE="Boy2"
+    SOLID=True
+
+class Cat(GameElement):
+    IMAGE="Cat"
+    SOLID=True
+
+class Girl(GameElement):
+    IMAGE="Girl"
+    SOLID=True
+
+class Girl2(GameElement):
+    IMAGE="Girl2"
+    SOLID=True
+
+
 
 
 class ClassName(object):
@@ -116,29 +139,8 @@ class Character(GameElement):
             return (self.x+1, self.y)
         return None
 
-class SadChild(GameElement):
-    IMAGE="Boy"
-    SOLID=True
 
-    def interact(self, player):
-        dialogue=[
-        GAME_BOARD.draw_msg("Hello Traveler. If you were planning on having a nice time here, you came at the wrong time. *sniffle*"),
-        GAME_BOARD.draw_msg("All of our plants are dead.  We have no food. Soon we will all be dead, too. *tear runs down cheek*"),
-        GAME_BOARD.draw_msg("If only someone would bring us Best Tree seeds we could plant them in the lava to turn it to water and revive our crops."),
-        GAME_BOARD.draw_msg("Alas! No one here has the strength to go. *can no longer control his desperate sobbing*"),
-        GAME_BOARD.draw_msg("If you got some for us, we would be so happy.  We might even have a happy party, for once. My parents died at the last party. It was not happy.")
-        ]
-        i=0
-        while i < len(dialogue)-1:
-            if KEYBOARD[key.ENTER]:
-                i+=1
-
-        # GAME_BOARD.draw_msg("Hello Traveler. If you were planning on having a nice time here, you came at the wrong time. *sniffle*")
-        # GAME_BOARD.draw_msg("All of our plants are dead.  We have no food. Soon we will all be dead, too. *tear runs down cheek*")
-        # GAME_BOARD.draw_msg("If only someone would bring us Best Tree seeds we could plant them in the lava to turn it to water and revive our crops.")
-        # GAME_BOARD.draw_msg("Alas! No one here has the strength to go. *can no longer control his desperate sobbing*")
-        # GAME_BOARD.draw_msg("If you got some for us, we would be so happy.  We might even have a happy party, for once. My parents died at the last party. It was not happy.")
-
+        
 ####   End class definitions    ####
 
 def initialize():
@@ -148,65 +150,56 @@ def initialize():
     # GAME_BOARD.register(rock1)
     # GAME_BOARD.set_el(2, 1, rock1)
 
-    #Initialize and register rock 2
-    Star=Yellow_Star()
-    GAME_BOARD.register(Star)
-    GAME_BOARD.set_el(5,4, Star)
+    black_rock_positions=[
+                        (5,4),
+                        (2,3),
+                        (6,6)
+                        ]
+    brocks=[]
 
-    rock2 = Blue_Rock()
-    GAME_BOARD.register(rock2)
-    GAME_BOARD.set_el(2, 2, rock2)
+    for pos in black_rock_positions:
+        black_rock=Black_Rock()
+        GAME_BOARD.register(black_rock)
+        GAME_BOARD.set_el(pos[1], pos[0], black_rock)
+        brocks.append(black_rock)
+
+    for black_rock in brocks:
+        print black_rock
+
+    lava_rock = Lava_Rock()
+    GAME_BOARD.register(lava_rock)
+    GAME_BOARD.set_el(1, 7, lava_rock)
+
+    lava_rock = Lava_Rock()
+    GAME_BOARD.register(lava_rock)
+    GAME_BOARD.set_el(1, 3, lava_rock)
 
 
-    # best_tree_positions=[
-    #         (0,0),
-    #         (0,8),
-    #         (8,0),
-    #         (8,8)
-    #         ]
-    # best_trees=[]
+    dead_shrub_positions=[
+            (7,1),
+            (7,2),
+            (7,3),
+            (7,4),
+            (1,5)
+            ]
+    shrubs=[]
     
-    # for pos in best_tree_positions:
-    #     tree=Best_Tree()
-    #     GAME_BOARD.register(tree)
-    #     GAME_BOARD.set_el(pos[0], pos[1], tree)
-    #     best_trees.append(tree)
+    for pos in dead_shrub_positions:
+        shrub=Dead_Shrub()
+        GAME_BOARD.register(shrub)
+        GAME_BOARD.set_el(pos[0], pos[1], shrub)
+        shrubs.append(shrub)
 
+    for shrub in shrubs:
+      print shrub
 
+    cat_girl = Cat()
+    GAME_BOARD.register(cat_girl)
+    GAME_BOARD.set_el(7, 5, cat_girl)
 
-    # rock_positions=[
-    #     (2,1),
-    #     (1,2),
-    #     (3,2),
-    #     (2,3)
-    #     ]
-    # rocks = []
-
-    # for pos in rock_positions:
-    #     rock=Rock()
-    #     GAME_BOARD.register(rock)
-    #     GAME_BOARD.set_el(pos[0], pos[1], rock)
-    #     rocks.append(rock)
-    # rocks[-1].SOLID = False
-
-    # for rock in rocks:
-    #     print rock
-
-    heart = Heart()
-    GAME_BOARD.register(heart)
-    GAME_BOARD.set_el(6, 2, heart)
-
-    # rainbow_star2=Rainbow_Star2()
-    # GAME_BOARD.register(rainbow_star2)
-    # GAME_BOARD.set_el(8,6,rainbow_star2)
-    
-    # rainbow_star=Rainbow_Star()
-    # GAME_BOARD.register(rainbow_star)
-    # GAME_BOARD.set_el(7,6,rainbow_star)
-
-    # rainbow_rock=Rainbow_Rock()
-    # GAME_BOARD.register(rainbow_rock)
-    # GAME_BOARD.set_el(0,4, rainbow_rock)
+    boy2 = Boy2()
+    GAME_BOARD.register(boy2)
+    GAME_BOARD.set_el(6, 3, boy2)
 
     sad_child = SadChild()
     GAME_BOARD.register(sad_child)
@@ -226,12 +219,15 @@ def keyboard_handler():
 
     if KEYBOARD[key.UP]:
         direction = "up"
+        print "key is up"
     if KEYBOARD[key.DOWN]:
         direction = "down"
     if KEYBOARD[key.LEFT]:
         direction = "left"
     if KEYBOARD[key.RIGHT]:
         direction = "right"
+    if KEYBOARD[key.ENTER]:
+        print "enter key"
 
     if direction:
         next_location = PLAYER.next_pos(direction)

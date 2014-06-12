@@ -5,9 +5,10 @@ from pyglet.window import key
 from core import GameElement
 
 SCREEN_X = 1100
-SCREEN_Y = 950
+SCREEN_Y = 1000
 
 game_window = pyglet.window.Window(SCREEN_X, SCREEN_Y)
+
 
 pyglet.resource.path = ["images/"]
 pyglet.resource.reindex()
@@ -30,10 +31,13 @@ def setup_images():
             "ShortTree": "Tree Short.png",
             "TallTree": "Tree Tall.png",
             "BestTree": "Tree Cute.png",
+            "DeadShrub": "Dead_Shrub.png",
             "Lava": "Lava_block.png",
             "Water": "Water Block.png",
             "Rock": "Rock.png",
             "Rock2": "Rock2.png",
+            "BlackRock": "Black_rock.png",
+            "LavaRock": "Lava_Rock.png",
             "RainbowRock": "RainbowRock.png",
             "Chest": "Chest Closed.png",
             "DoorClosed": "Door Tall Closed.png",
@@ -48,10 +52,13 @@ def setup_images():
             "Heart": "Heart.png",
             "Key": "Key.png",
             "Boy": "Character Boy.png",
+            "Boy2": "boy2.png",
             "Cat": "Character Cat Girl.png",
             "Horns": "Character Horn Girl.png",
             "Girl": "Character Pink Girl.png",
+            "Girl2": "Character Purple Girl.png",
             "Princess": "Character Princess Girl.png",
+            "SadBoy": "SadChild.png",
             "SouthRamp": "Ramp South.png",
             "NorthRamp": "Ramp South.png",
             "WestRamp": "Ramp West.png",
@@ -112,7 +119,7 @@ class Board(object):
         for y in range(height):
             self.content_layer.append(list(row))
 
-        self.message = pyglet.text.Label(text = "", x=10, y=SCREEN_Y-30)
+        self.message = pyglet.text.Label(text = "", width = 1000, x=10, y=SCREEN_Y-30, multiline=True)
         self.bg_sprites = []
 
         for y in range(height):
