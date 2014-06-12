@@ -99,6 +99,7 @@ class ClassName(object):
 
 class Character(GameElement):
     IMAGE="Horns"
+    SOLID=True
 
     def __init__(self):
         GameElement.__init__(self)
@@ -115,8 +116,28 @@ class Character(GameElement):
             return (self.x+1, self.y)
         return None
 
-    def health(self):
-        health = 50
+class SadChild(GameElement):
+    IMAGE="Boy"
+    SOLID=True
+
+    def interact(self, player):
+        dialogue=[
+        GAME_BOARD.draw_msg("Hello Traveler. If you were planning on having a nice time here, you came at the wrong time. *sniffle*"),
+        GAME_BOARD.draw_msg("All of our plants are dead.  We have no food. Soon we will all be dead, too. *tear runs down cheek*"),
+        GAME_BOARD.draw_msg("If only someone would bring us Best Tree seeds we could plant them in the lava to turn it to water and revive our crops."),
+        GAME_BOARD.draw_msg("Alas! No one here has the strength to go. *can no longer control his desperate sobbing*"),
+        GAME_BOARD.draw_msg("If you got some for us, we would be so happy.  We might even have a happy party, for once. My parents died at the last party. It was not happy.")
+        ]
+        i=0
+        while i < len(dialogue)-1:
+            if KEYBOARD[key.ENTER]:
+                i+=1
+
+        # GAME_BOARD.draw_msg("Hello Traveler. If you were planning on having a nice time here, you came at the wrong time. *sniffle*")
+        # GAME_BOARD.draw_msg("All of our plants are dead.  We have no food. Soon we will all be dead, too. *tear runs down cheek*")
+        # GAME_BOARD.draw_msg("If only someone would bring us Best Tree seeds we could plant them in the lava to turn it to water and revive our crops.")
+        # GAME_BOARD.draw_msg("Alas! No one here has the strength to go. *can no longer control his desperate sobbing*")
+        # GAME_BOARD.draw_msg("If you got some for us, we would be so happy.  We might even have a happy party, for once. My parents died at the last party. It was not happy.")
 
 ####   End class definitions    ####
 
@@ -136,19 +157,20 @@ def initialize():
     GAME_BOARD.register(rock2)
     GAME_BOARD.set_el(2, 2, rock2)
 
-    best_tree_positions=[
-            (0,0),
-            (0,8),
-            (8,0),
-            (8,8)
-            ]
-    best_trees=[]
+
+    # best_tree_positions=[
+    #         (0,0),
+    #         (0,8),
+    #         (8,0),
+    #         (8,8)
+    #         ]
+    # best_trees=[]
     
-    for pos in best_tree_positions:
-        tree=Best_Tree()
-        GAME_BOARD.register(tree)
-        GAME_BOARD.set_el(pos[0], pos[1], tree)
-        best_trees.append(tree)
+    # for pos in best_tree_positions:
+    #     tree=Best_Tree()
+    #     GAME_BOARD.register(tree)
+    #     GAME_BOARD.set_el(pos[0], pos[1], tree)
+    #     best_trees.append(tree)
 
 
 
@@ -186,6 +208,9 @@ def initialize():
     # GAME_BOARD.register(rainbow_rock)
     # GAME_BOARD.set_el(0,4, rainbow_rock)
 
+    sad_child = SadChild()
+    GAME_BOARD.register(sad_child)
+    GAME_BOARD.set_el(4, 7, sad_child)
 
     global PLAYER
     PLAYER = Character()
@@ -194,7 +219,7 @@ def initialize():
 
     print PLAYER
 
-    GAME_BOARD.draw_msg("BEST GAME EVER (doesn't do anything yet)!!!!111!!!11!")
+    GAME_BOARD.draw_msg("This game, it is the saddest. :( :( :*( ")
 
 def keyboard_handler():
     direction = None

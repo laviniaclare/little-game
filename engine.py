@@ -26,6 +26,7 @@ def setup_images():
             "GrassBlock": "Grass Block.png",
             "StoneBlock": "Stone Block.png",
             "RainbowBlock": "Rainbow_block.png",
+            "DarkDirt": "Dark_Dirt_Block.png",
             "ShortTree": "Tree Short.png",
             "TallTree": "Tree Tall.png",
             "BestTree": "Tree Cute.png",
@@ -102,7 +103,7 @@ class Board(object):
                 # On the boundaries
                 game_map.append(["Lava"] * width)
             else:
-                row = ["Lava"] + (["GrassBlock"] * inner_width) + ["Lava"]
+                row = ["Lava"] + (["DarkDirt"] * inner_width) + ["Lava"]
                 game_map.append(row)
         
         self.base_board = game_map
