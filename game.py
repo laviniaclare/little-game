@@ -17,9 +17,14 @@ GAME_HEIGHT = 9
 #### Put class definitions here ####
 class Portal(GameElement):
     IMAGE="Selector"
+    SOLID=True
     def interact(self, player):
-        GAME_BOARD.draw_msg("At some point this will take you to the next map.  It's not working yet.  You'll have to hit enter to move on though, I think")
-
+        if len(player.inventory)> 0 :
+            GAME_BOARD.draw_msg("Good job! Next dimension!")
+            #Move to next map in maps list, and next level in levels list
+            # Board.level_maps[i+1]
+        else:
+            GAME_BOARD.draw_msg("You probably want to explore some more before leaving...")
 class Yellow_Star(GameElement):
     IMAGE="Star"
     def interact(self, player):
@@ -107,11 +112,15 @@ class Lava_Rock(GameElement):
     IMAGE="LavaRock"
     SOLID=True
 
-class Black_Rock(GameElement):
+class SBlack_Rock(GameElement):
     IMAGE="BlackRock"
     def interact(self, player):
         player.inventory.append(self)
         GAME_BOARD.draw_msg("You just acquired a BLACK ROCK! Maybe this will be useful later. You have %d items!" %(len(player.inventory)))
+
+class Black_Rock(GameElement):
+    IMAGE="BlackRock"
+    SOLID=True
 
 class SadChild(GameElement):
     IMAGE="SadBoy"
@@ -157,6 +166,7 @@ class MC_Boy2(GameElement):
     def interact(self, player):
         GAME_BOARD.draw_msg("Wow! That rock you've got---it has more colors than I could ever imagine! Can I have it?")
         GAME_BOARD.check_status("Waiting...")
+        # if status=="Waiting...":
 #Interactive text here. 
 
 class MC_Boy(GameElement):
@@ -204,17 +214,15 @@ class Character(GameElement):
         elif direction == "right":
             return (self.x+1, self.y)
         return None
-
+#THIS SYNTAX IS USEFUL FOR BORDERS ^^^^^^^
 
         
 ####   End class definitions    ####
 
 def initialize():
     """Put game initialization code here"""
-    # Initialize and register rock 1
-    # rock1=Rock()
-    # GAME_BOARD.register(rock1)
-    # GAME_BOARD.set_el(2, 1, rock1)
+
+    #Make levels list wiht all levels
     def level1():
         black_rock_positions=[
                             (5,4),
@@ -231,6 +239,11 @@ def initialize():
 
         for black_rock in brocks:
             print black_rock
+
+        special_black_rock = SBlack_Rock()
+        GAME_BOARD.register(special_black_rock)
+        GAME_BOARD.set_el(1, 1, special_black_rock)
+
 
         lava_rock = Lava_Rock()
         GAME_BOARD.register(lava_rock)
@@ -272,9 +285,9 @@ def initialize():
         GAME_BOARD.set_el(4, 7, sad_child)
 
         # if not :
-        #     portal = Portal()
-        #     GAME_BOARD.register(portal)
-        #     GAME_BOARD.set_el(7, 7, portal)
+        portal = Portal()
+        GAME_BOARD.register(portal)
+        GAME_BOARD.set_el(7, 7, portal)
         # else:
         #     GAME_BOARD.draw_msg("Press Enter to travel in spaaaaaaaaaaaaaceeeee. (Make sure to talk to everyone and check out the scenery first. Stop and smell the...lava rocks.)")
         #     if KEYBOARD[key.ENTER]:
@@ -408,7 +421,7 @@ def initialize():
 
 
         GAME_BOARD.draw_msg("Wow, it's like and old movie.")
-    level3()
+    level1()
 
 
     global PLAYER
@@ -420,6 +433,12 @@ def initialize():
 
 def keyboard_handler():
     direction = None
+     # GAME_BOARD.check_status()
+     #    if status=="Waiting...":
+     #        if KEYBOARD[key.ENTER]:
+     #        #Do stuff
+     #        #next() <---what to do if enter is hit.
+     #        pass
 
     if KEYBOARD[key.UP]:
         direction = "up"
@@ -430,9 +449,9 @@ def keyboard_handler():
         direction = "left"
     if KEYBOARD[key.RIGHT]:
         direction = "right"
-    if KEYBOARD[key.ENTER]:
-        GAME_BOARD.check_status()
 
+               
+    
     if direction:
         next_location = PLAYER.next_pos(direction)
         next_x = next_location[0]
